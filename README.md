@@ -6,7 +6,7 @@ I, TheStalkerStalker, am not responsible for this code, I am merely documenting.
 
 
 
-This can be built/run the same way as any normal Dalamud project. It may not be perfect- if you find any issues, please raise a PR.
+This can be built/run the same way as any normal Dalamud project. It may not be perfect, as it is decompiled code- that being said, if you find any issues, please raise a PR.
 
 
 
