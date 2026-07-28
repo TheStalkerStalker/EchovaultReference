@@ -13,7 +13,7 @@ public sealed class MainWindow : Window
 	private MainTab? _pendingTab;
 
 	public MainWindow(IReadOnlyList<(MainTab Tab, string Label, Action Draw)> tabs)
-		: base("Echo v0.8.0###EchoSettings")
+		: base("Echo v0.8.1###EchoSettings")
 	{
 		_tabs = tabs;
 		base.Size = new Vector2(560f, 440f);

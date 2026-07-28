@@ -258,7 +258,7 @@ public sealed class SettingsTab
 		{
 			return s;
 		}
-		return char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1);
+		return char.ToUpperInvariant(s[0]) + s.Substring(1);
 	}
 
 	private unsafe static ulong ReadContentId(IPlayerCharacter local)

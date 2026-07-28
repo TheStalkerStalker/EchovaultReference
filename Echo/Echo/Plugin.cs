@@ -23,7 +23,7 @@ public sealed class Plugin : IDalamudPlugin, IDisposable
 
 	private const string ServerBaseUrl = "https://echovault.gg";
 
-	internal const string PluginVersion = "0.8.0";
+	internal const string PluginVersion = "0.8.1";
 
 	private readonly ICommandManager _commands;
 
@@ -140,7 +140,7 @@ public sealed class Plugin : IDalamudPlugin, IDisposable
 		}, SaveSettings);
 		ProgressTab progressTab = new ProgressTab(statsCache, () => _client, log);
 		CoverageTab coverageTab = new CoverageTab(() => _client, objectTable, clientState, dataManager, log);
-		HealthTab healthTab = new HealthTab(State, Session, Health, "0.8.0");
+		HealthTab healthTab = new HealthTab(State, Session, Health, "0.8.1");
 		SettingsTab settingsTab = new SettingsTab(State, () => _client, objectTable, log, SaveSettings);
 		_mainWindow = new MainWindow(new List<(MainTab, string, Action)>
 		{
@@ -224,7 +224,10 @@ public sealed class Plugin : IDalamudPlugin, IDisposable
 			LegacyIdentityMigrator.TryAdopt(_configDir, paths);
 			_instanceLock = acquired;
 			KeyStore keys = new KeyStore(paths.KeysPath, new DpapiKeyProtector());
-			EchoApiClient client = (_client = new EchoApiClient(_http, keys));
+			EchoApiClient client = (_client = new EchoApiClient(_http, keys, delegate(string msg)
+			{
+				_log.Information("[Echo] {Message}", msg);
+			}));
 			PluginState state = State;
 			StoredCredentials stored = keys.Load();
 			RegistrationStatus registration;
@@ -313,7 +316,7 @@ public sealed class Plugin : IDalamudPlugin, IDisposable
 		};
 		_drainTask = Task.Run(async delegate
 		{
-			await drain.RunAsync("0.8.0", sessionCts.Token);
+			await drain.RunAsync("0.8.1", sessionCts.Token);
 		}, sessionCts.Token);
 	}
 
@@ -392,16 +395,7 @@ public sealed class Plugin : IDalamudPlugin, IDisposable
 		}
 		else if (args.StartsWith("appeal", StringComparison.OrdinalIgnoreCase))
 		{
-			object obj;
-			if (args.Length <= 6)
-			{
-				obj = null;
-			}
-			else
-			{
-				obj = args.Substring(6, args.Length - 6).Trim();
-			}
-			string note = (string)obj;
+			string note = ((args.Length > 6) ? args.Substring(6).Trim() : null);
 			AppealAsync(string.IsNullOrWhiteSpace(note) ? null : note);
 		}
 		else
