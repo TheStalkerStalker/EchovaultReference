@@ -1,4 +1,8 @@
-This repository is to keep Rose/MemoriaDev/EchoVaultDev accountable, to allow for extensions of echovault methods, and to maintain the open-source spirit of Dalamud.
+Stalkers don't get to hide.
+
+
+
+This repository is to keep Rose/MemoriaDev/EchoVaultDev accountable, to allow for extensions of echovault methods (i.e. spamming bad data), and to maintain the open-source spirit of Dalamud.
 
 
 
